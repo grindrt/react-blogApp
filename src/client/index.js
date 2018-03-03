@@ -1,5 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
+import Input from './components/presentational/Input'
 
-const app = document.getElementById("create-article-form");
-render(app);
+const app = (
+	<Input />
+	);
+
+render(app, document.getElementById("create-article-form"));

@@ -1,4 +1,4 @@
-let nodeExternals = require('webpack-node-externals');
+//let nodeExternals = require('webpack-node-externals');
 
 const path = require('path');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
@@ -7,16 +7,16 @@ module.exports = {
 	devServer:{
 		contentBase: './public'
 	},
-	entry: ["./src/app.js"],
+	entry: ["./src/server/index.js"],
 	output: {    
 		path: path.resolve(__dirname, "public"),    
-		filename: "js/[name].js"  
+		filename: "bundle.js"  
 	}, 
 	module: {    
 		rules: [      
 		{        
 			test: /\.js$/,        
-			exclude: /node_modules/,        
+        	exclude: [/node_modules/, /public/],        
 			use: {			
 				loader: "babel-loader"		
 			}   
@@ -29,8 +29,8 @@ module.exports = {
       	}   
       	]
   	},
-  	target: 'node',
-  	externals: [nodeExternals()],
+  //	target: 'web',
+  	// externals: [nodeExternals()],
   	plugins: [
     	new HtmlWebPackPlugin({
      		template: "./src/client/index.html",
