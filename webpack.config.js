@@ -1,40 +1,22 @@
 //let nodeExternals = require('webpack-node-externals');
 
 const path = require('path');
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const webpack = require('webpack');
 
 module.exports = {
-	devServer:{
-		contentBase: './public'
-	},
-	entry: ["./src/server/index.js"],
+	devtool: 'cheap-module-eval-source-map',
+	entry: [
+		'webpack-hot-middleware/client',
+    	'./src/client/index'
+    	],
 	output: {    
 		path: path.resolve(__dirname, "public"),    
-		filename: "bundle.js"  
-	}, 
-	module: {    
-		rules: [      
-		{        
-			test: /\.js$/,        
-        	exclude: [/node_modules/, /public/],        
-			use: {			
-				loader: "babel-loader"		
-			}   
-		},
-      	{
-        	test: /\.html$/,
-        	use: {
-           		loader: "html-loader"
-        	}
-      	}   
-      	]
-  	},
-  //	target: 'web',
-  	// externals: [nodeExternals()],
-  	plugins: [
-    	new HtmlWebPackPlugin({
-     		template: "./src/client/index.html",
-      		filename: "./index.html"
-    	})
-  	]
+		filename: "bundle.js",
+		publicPath: "/static/"
+	},
+  plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+  ]
 };
